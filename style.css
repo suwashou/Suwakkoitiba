@@ -26,7 +26,6 @@ transform .3s ease,
 box-shadow .3s ease;
 }
 
-
 /* ===== ヘッダー ===== */
 
 header{
@@ -38,20 +37,20 @@ overflow:hidden;
 border-radius:0 0 20px 20px;
 }
 
-
-/* 背景 */
+/* ===== 背景ロゴ ===== */
 
 .header-bg{
 position:absolute;
 inset:0;
-z-index:1;
+z-index:0; /* 一番後ろ */
 pointer-events:none;
 }
 
 .header-bg img{
 position:absolute;
 width:900px;
-opacity:0.07;
+opacity:0.05;
+filter:blur(1px);
 }
 
 /* 左上 */
@@ -71,7 +70,6 @@ bottom:-200px;
 right:-200px;
 animation:bgMove2 22s ease-in-out infinite;
 }
-
 
 /* 背景アニメ */
 
@@ -95,8 +93,7 @@ animation:bgMove2 22s ease-in-out infinite;
 
 }
 
-
-/* テキスト */
+/* ===== テキスト ===== */
 
 .header-content{
 position:absolute;
@@ -106,7 +103,6 @@ transform:translate(-50%,-50%);
 text-align:center;
 z-index:2;
 }
-
 
 /* タイトル */
 
@@ -129,7 +125,6 @@ margin-top:10px;
 font-size:22px;
 font-weight:bold;
 }
-
 
 /* ===== ナビ ===== */
 
@@ -183,7 +178,6 @@ background:rgba(0,0,0,0.9);
 padding:6px 0;
 }
 
-
 /* ===== メイン ===== */
 
 main{
@@ -192,10 +186,12 @@ padding:20px;
 max-width:1000px;
 
 margin:auto;
+
+position:relative;
+z-index:5;
 }
 
-
-/* セクション */
+/* ===== セクション ===== */
 
 section{
 
@@ -208,6 +204,9 @@ background:white;
 border-radius:12px;
 
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
+
+position:relative;
+z-index:5;
 }
 
 section h2{
@@ -221,7 +220,6 @@ display:inline-block;
 padding-bottom:5px;
 }
 
-
 /* ===== グリッド ===== */
 
 .grid{
@@ -232,8 +230,7 @@ flex-wrap:wrap;
 gap:20px;
 }
 
-
-/* カード */
+/* ===== カード ===== */
 
 .card,
 .post{
@@ -253,7 +250,6 @@ box-shadow:0 3px 10px rgba(0,0,0,0.1);
 text-align:center;
 }
 
-
 /* カードホバー */
 
 .card:hover,
@@ -263,7 +259,6 @@ transform:translateY(-6px);
 
 box-shadow:0 10px 22px rgba(0,0,0,0.15);
 }
-
 
 /* 画像 */
 
@@ -277,7 +272,6 @@ border-radius:10px;
 
 cursor:pointer;
 }
-
 
 /* ===== 動画 ===== */
 
@@ -305,7 +299,6 @@ border:0;
 border-radius:12px;
 }
 
-
 /* ===== フッター ===== */
 
 footer{
@@ -331,7 +324,6 @@ vertical-align:middle;
 
 margin-right:5px;
 }
-
 
 /* ===== モーダル ===== */
 
@@ -421,7 +413,6 @@ color:white;
 background:rgba(255,255,255,0.3);
 }
 
-
 /* ===== カウントダウンアニメ ===== */
 
 @keyframes bounce3{
@@ -436,7 +427,6 @@ background:rgba(255,255,255,0.3);
 
 animation:bounce3 .5s;
 }
-
 
 /* ===== レスポンシブ ===== */
 
@@ -484,7 +474,6 @@ padding-top:60%;
 
 }
 
-
 /* =========================
 Retro Credit Mode
 ========================= */
@@ -522,7 +511,6 @@ animation:blink 1s steps(1) infinite;
 
 50%{opacity:0}
 }
-
 
 /* ERROR */
 
