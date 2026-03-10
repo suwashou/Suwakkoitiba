@@ -42,7 +42,7 @@ border-radius:0 0 20px 20px;
 .header-bg{
 position:absolute;
 inset:0;
-z-index:0; /* 一番後ろ */
+z-index:0;
 pointer-events:none;
 }
 
@@ -93,7 +93,7 @@ animation:bgMove2 22s ease-in-out infinite;
 
 }
 
-/* ===== テキスト ===== */
+/* ===== ヘッダー文字 ===== */
 
 .header-content{
 position:absolute;
@@ -104,18 +104,13 @@ text-align:center;
 z-index:2;
 }
 
-/* タイトル */
-
 .main-title{
 margin:0;
 font-size:42px;
 font-weight:bold;
-
 background:linear-gradient(90deg,#ffffff,#eaffea);
-
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-
 text-shadow:0 3px 10px rgba(0,0,0,0.4);
 }
 
@@ -126,67 +121,51 @@ font-size:22px;
 font-weight:bold;
 }
 
-/* ===== ナビ ===== */
+/* ===== ナビ（追尾） ===== */
 
 nav{
-
 position:sticky;
+position:-webkit-sticky;
 top:0;
-
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.65);
 backdrop-filter:blur(8px);
-
-z-index:1000;
-
+z-index:2000;
 padding:12px 0;
+width:100%;
 }
 
 nav ul{
-
 display:flex;
 justify-content:center;
-
 gap:15px;
-
 margin:0;
 padding:0;
-
 list-style:none;
 }
 
 nav a{
-
 color:white;
 font-weight:bold;
-
 padding:8px 14px;
-
 border-radius:6px;
 }
 
 nav a:hover{
-
 background:rgba(255,255,255,0.2);
-
 transform:translateY(-2px);
 }
 
 nav.scrolled{
-
 background:rgba(0,0,0,0.9);
-
 padding:6px 0;
 }
 
 /* ===== メイン ===== */
 
 main{
-
 padding:20px;
 max-width:1000px;
-
 margin:auto;
-
 position:relative;
 z-index:5;
 }
@@ -194,39 +173,27 @@ z-index:5;
 /* ===== セクション ===== */
 
 section{
-
 padding:40px 25px;
-
 margin-bottom:30px;
-
 background:white;
-
 border-radius:12px;
-
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
-
 position:relative;
 z-index:5;
 }
 
 section h2{
-
 margin-top:0;
-
 border-bottom:3px solid #4CAF50;
-
 display:inline-block;
-
 padding-bottom:5px;
 }
 
 /* ===== グリッド ===== */
 
 .grid{
-
 display:flex;
 flex-wrap:wrap;
-
 gap:20px;
 }
 
@@ -234,197 +201,132 @@ gap:20px;
 
 .card,
 .post{
-
 flex:1 1 calc(33% - 20px);
-
 min-width:250px;
-
 padding:15px;
-
 background:white;
-
 border-radius:12px;
-
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
-
 text-align:center;
 }
 
-/* カードホバー */
-
 .card:hover,
 .post:hover{
-
 transform:translateY(-6px);
-
 box-shadow:0 10px 22px rgba(0,0,0,0.15);
 }
 
-/* 画像 */
+/* ===== 画像 ===== */
 
 .card img,
 .post img{
-
 width:100%;
 max-width:600px;
-
 border-radius:10px;
-
 cursor:pointer;
 }
 
 /* ===== 動画 ===== */
 
 .video-wrapper{
-
 position:relative;
-
 width:100%;
-
 padding-top:56.25%;
 }
 
 .video-wrapper iframe{
-
 position:absolute;
-
 top:0;
 left:0;
-
 width:100%;
 height:100%;
-
 border:0;
-
 border-radius:12px;
 }
 
 /* ===== フッター ===== */
 
 footer{
-
 background:#f8f9fa;
-
 padding:40px 20px;
-
 border-top:1px solid #ddd;
-
 font-size:14px;
-
 text-align:center;
-
 color:#555;
 }
 
 .github-icon{
-
 width:20px;
-
 vertical-align:middle;
-
 margin-right:5px;
 }
 
 /* ===== モーダル ===== */
 
 .modal{
-
 position:fixed;
-
 inset:0;
-
 background:rgba(0,0,0,0.85);
-
 display:none;
-
 align-items:center;
-
 justify-content:center;
-
 padding:20px;
-
 z-index:3000;
-
 opacity:0;
-
 transition:opacity .3s;
 }
 
 .modal.show{
-
 display:flex;
-
 opacity:1;
 }
 
 .modal-inner{
-
 position:relative;
-
 max-width:95%;
 max-height:95%;
-
 transform:scale(.8);
-
 transition:transform .3s;
 }
 
 .modal.show .modal-inner{
-
 transform:scale(1);
 }
 
 .modal-content{
-
 max-width:90vw;
 max-height:85vh;
-
 border-radius:12px;
 }
 
 .close{
-
 position:absolute;
-
 top:-15px;
 right:-15px;
-
 background:rgba(0,0,0,0.6);
-
 border-radius:50%;
-
 width:40px;
 height:40px;
-
 display:flex;
-
 align-items:center;
 justify-content:center;
-
 font-size:22px;
-
 cursor:pointer;
-
 color:white;
 }
 
 .close:hover{
-
 background:rgba(255,255,255,0.3);
 }
 
 /* ===== カウントダウンアニメ ===== */
 
 @keyframes bounce3{
-
 0%,100%{transform:scale(1)}
-
 50%{transform:scale(1.4)}
-
 }
 
 .countdown-bounce{
-
 animation:bounce3 .5s;
 }
 
@@ -474,68 +376,45 @@ padding-top:60%;
 
 }
 
-/* =========================
-Retro Credit Mode
-========================= */
+/* ===== Retro Credit Mode ===== */
 
 body.retro{
-
 background:black;
-
 color:#00cc00;
-
 font-family:'VT323',monospace;
-
 font-size:28px;
-
 margin:0;
-
 padding:20px;
-
 overflow:hidden;
 }
 
 #retro-screen{
-
 white-space:pre;
 }
 
 #retro-screen::after{
-
 content:"▌";
-
 animation:blink 1s steps(1) infinite;
 }
 
 @keyframes blink{
-
 50%{opacity:0}
 }
 
-/* ERROR */
+/* ===== ERROR SCREEN ===== */
 
 #error-screen{
-
 display:none;
-
 position:fixed;
-
 inset:0;
-
 background:black;
-
 color:red;
-
 padding:40px;
-
 cursor:pointer;
 }
 
 #close-text{
-
 text-decoration:underline;
-
 cursor:pointer;
-
 color:red;
 }
