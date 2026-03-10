@@ -64,7 +64,7 @@ header {
     100% { transform: rotate(25deg) translateY(0); }
 }
 
-/* ヘッダー文字 */
+/* ===== ヘッダー文字 ===== */
 .header-content {
     position: absolute;
     top: 50%;
@@ -89,18 +89,17 @@ header {
     font-weight: bold;
 }
 
-/* ===== ナビ（ヘッダー下に固定 + アニメーション） ===== */
+/* ===== ナビ（ヘッダー下 + sticky） ===== */
 nav {
-    position: fixed;
-    top: 320px; /* ヘッダー高さ */
-    left: 0;
+    position: sticky;
+    top: 0; /* スクロールで画面上に固定 */
     width: 100%;
     background: rgba(0,0,0,0.75);
     padding: 12px 0;
     z-index: 2000;
     transform: translateY(-30px);
     opacity: 0;
-    animation: navSlide 1s forwards;
+    animation: navSlide 0.8s forwards;
     animation-delay: 0.5s;
 }
 @keyframes navSlide {
@@ -130,7 +129,7 @@ main {
     padding: 20px;
     max-width: 1000px;
     margin: auto;
-    margin-top: 70px;
+    margin-top: 20px;
     position: relative;
     z-index: 5;
 }
@@ -256,7 +255,7 @@ footer {
 
 /* ===== レスポンシブ ===== */
 @media(max-width: 768px) {
-    nav { top: 250px; }
+    nav { top: 0; }
     .grid { flex-direction: column; }
     .card, .post { flex: 1 1 100%; }
     section { padding: 30px 15px; }
@@ -264,7 +263,7 @@ footer {
     .main-title { font-size: 30px; }
 }
 @media(max-width: 480px) {
-    nav { top: 200px; }
+    nav { top: 0; }
     header { height: 200px; }
     .main-title { font-size: 24px; }
     #countdown { font-size: 18px; }
