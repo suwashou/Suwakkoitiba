@@ -71,8 +71,6 @@ right:-200px;
 animation:bgMove2 22s ease-in-out infinite;
 }
 
-/* 背景アニメ */
-
 @keyframes bgMove1{
 
 0%{transform:rotate(-25deg) translateY(0)}
@@ -121,17 +119,18 @@ font-size:22px;
 font-weight:bold;
 }
 
-/* ===== ナビ（追尾） ===== */
+/* ===== ナビ（完全追尾） ===== */
 
 nav{
-position:sticky;
-position:-webkit-sticky;
+position:fixed;
 top:0;
-background:rgba(0,0,0,0.65);
-backdrop-filter:blur(8px);
-z-index:2000;
-padding:12px 0;
+left:0;
 width:100%;
+z-index:2000;
+
+background:rgba(0,0,0,0.75);
+
+padding:12px 0;
 }
 
 nav ul{
@@ -155,17 +154,13 @@ background:rgba(255,255,255,0.2);
 transform:translateY(-2px);
 }
 
-nav.scrolled{
-background:rgba(0,0,0,0.9);
-padding:6px 0;
-}
-
 /* ===== メイン ===== */
 
 main{
 padding:20px;
 max-width:1000px;
 margin:auto;
+margin-top:70px;
 position:relative;
 z-index:5;
 }
@@ -178,8 +173,6 @@ margin-bottom:30px;
 background:white;
 border-radius:12px;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
-position:relative;
-z-index:5;
 }
 
 section h2{
@@ -272,25 +265,16 @@ align-items:center;
 justify-content:center;
 padding:20px;
 z-index:3000;
-opacity:0;
-transition:opacity .3s;
 }
 
 .modal.show{
 display:flex;
-opacity:1;
 }
 
 .modal-inner{
 position:relative;
 max-width:95%;
 max-height:95%;
-transform:scale(.8);
-transition:transform .3s;
-}
-
-.modal.show .modal-inner{
-transform:scale(1);
 }
 
 .modal-content{
@@ -313,21 +297,6 @@ justify-content:center;
 font-size:22px;
 cursor:pointer;
 color:white;
-}
-
-.close:hover{
-background:rgba(255,255,255,0.3);
-}
-
-/* ===== カウントダウンアニメ ===== */
-
-@keyframes bounce3{
-0%,100%{transform:scale(1)}
-50%{transform:scale(1.4)}
-}
-
-.countdown-bounce{
-animation:bounce3 .5s;
 }
 
 /* ===== レスポンシブ ===== */
@@ -370,51 +339,4 @@ font-size:24px;
 font-size:18px;
 }
 
-.video-wrapper{
-padding-top:60%;
-}
-
-}
-
-/* ===== Retro Credit Mode ===== */
-
-body.retro{
-background:black;
-color:#00cc00;
-font-family:'VT323',monospace;
-font-size:28px;
-margin:0;
-padding:20px;
-overflow:hidden;
-}
-
-#retro-screen{
-white-space:pre;
-}
-
-#retro-screen::after{
-content:"▌";
-animation:blink 1s steps(1) infinite;
-}
-
-@keyframes blink{
-50%{opacity:0}
-}
-
-/* ===== ERROR SCREEN ===== */
-
-#error-screen{
-display:none;
-position:fixed;
-inset:0;
-background:black;
-color:red;
-padding:40px;
-cursor:pointer;
-}
-
-#close-text{
-text-decoration:underline;
-cursor:pointer;
-color:red;
 }
