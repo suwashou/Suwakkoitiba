@@ -8,9 +8,8 @@
 <link rel="icon" href="/favicon-v2.ico?v=2">
 </head>
 <body>
-  <noscript>
+<noscript>
 <style>
-
 noscript .js-block {
   position: fixed;
   inset: 0;
@@ -20,86 +19,39 @@ noscript .js-block {
   justify-content: center;
   text-align: center;
   z-index: 9999;
-  overflow: hidden;
   font-family: sans-serif;
 }
-
-/* 斜めロゴ背景 */
-noscript .js-bg {
-  position: absolute;
-  width: 700px;
-  opacity: 0.08;
-  transform: rotate(-25deg);
-  top: -120px;
-  left: -120px;
-}
-
-noscript .js-bg2 {
-  position: absolute;
-  width: 700px;
-  opacity: 0.08;
-  transform: rotate(25deg);
-  bottom: -120px;
-  right: -120px;
-}
-
-noscript .js-card {
-  background: white;
-  padding: 40px 50px;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  max-width: 500px;
-}
-
-noscript h1 {
-  margin-top: 0;
-  font-size: 32px;
-}
-
-noscript p {
-  font-size: 18px;
-  line-height: 1.6;
-}
-
+noscript .js-bg, .js-bg2 { position:absolute;width:700px;opacity:0.08; }
+noscript .js-bg { transform:rotate(-25deg); top:-120px; left:-120px; }
+noscript .js-bg2 { transform:rotate(25deg); bottom:-120px; right:-120px; }
+noscript .js-card { background:white;padding:40px 50px;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.15);max-width:500px; }
+noscript h1{ margin-top:0;font-size:32px; }
+noscript p{ font-size:18px;line-height:1.6; }
 </style>
 
 <div class="js-block">
-
 <img class="js-bg" src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big">
 <img class="js-bg2" src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big">
-
 <div class="js-card">
 <h1>JavaScriptが無効です</h1>
-<p>
-このサイト（諏訪っ子市場）は<br>
-JavaScriptを使用して動作しています。
-</p>
-<p>
-ブラウザ設定で<br>
-<strong>JavaScriptを有効</strong>にしてからご利用ください。
-</p>
+<p>このサイト（諏訪っ子市場）はJavaScriptを使用して動作しています。</p>
+<p>ブラウザ設定で<strong>JavaScriptを有効</strong>にしてからご利用ください。</p>
 </div>
-
 </div>
 </noscript>
 
 <header>
-
-<!-- 背景ロゴ -->
-<div class="header-bg">
-  <img src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big" class="bg1">
-  <img src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big" class="bg2">
-</div>
-
-<div class="header-content">
-  <h1 class="main-title">諏訪っ子市場へようこそ！</h1>
-  <p id="countdown">読み込み中…</p>
-  <p id="countdown-message" style="display:none;">イベント開始！</p>
-</div>
-
+  <div class="header-bg">
+    <img src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big" class="bg1">
+    <img src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big" class="bg2">
+  </div>
+  <div class="header-content">
+    <h1 class="main-title">諏訪っ子市場へようこそ！</h1>
+    <p id="countdown">読み込み中…</p>
+    <p id="countdown-message" style="display:none;">イベント開始！</p>
+  </div>
 </header>
 
-<!-- ナビはheaderの外に置く -->
 <nav>
   <ul>
     <li><a href="#top">トップ</a></li>
@@ -131,25 +83,22 @@ JavaScriptを使用して動作しています。
     </div>
   </section>
 
-<section id="videos">
-  <h2>動画</h2>
-  <div class="video-section">
-    <div class="video-item">
-      <p class="video-title">前回の諏訪っ子市場動画</p>
-      <div class="video-wrapper">
-        <iframe 
-          src="https://drive.google.com/file/d/1dW7gxfPq0x7khFmk5VjCpM-e4pO4EuHS/preview"
-          allowfullscreen>
-        </iframe>
+  <section id="videos">
+    <h2>動画</h2>
+    <div class="video-section">
+      <div class="video-item">
+        <p class="video-title">前回の諏訪っ子市場動画</p>
+        <div class="video-wrapper">
+          <iframe src="https://drive.google.com/file/d/1dW7gxfPq0x7khFmk5VjCpM-e4pO4EuHS/preview" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <section id="map">
-  <h2>マップ紹介</h2>
-  <img src="IMG_0517.jpeg" class="zoomable" width="800">
-</section>
+    <h2>マップ紹介</h2>
+    <img src="IMG_0517.jpeg" class="zoomable" width="800">
+  </section>
 
   <section id="blog">
     <h2>ブログ</h2>
@@ -185,14 +134,13 @@ JavaScriptを使用して動作しています。
   <a href="https://github.com/Ryouse1/Suwakkoitiba" target="_blank">
     <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="github-icon"> GitHub
   </a>
-
   <p class="copyright">© 諏訪小学校</p>
 </footer>
 
 <div id="imgModal" class="modal">
   <div class="modal-inner">
-    <span class="close">&times;</span>       <!-- バツボタン：最前面 -->
-    <img id="modalImg" class="modal-content"> <!-- 画像：背面 -->
+    <span class="close">&times;</span>
+    <img id="modalImg" class="modal-content">
   </div>
 </div>
 
