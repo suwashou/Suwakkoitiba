@@ -25,7 +25,7 @@ header {
     background: linear-gradient(135deg,#4CAF50,#2e8b57);
     color: white;
     overflow: hidden;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0;
 }
 
 /* 背景ロゴ */
