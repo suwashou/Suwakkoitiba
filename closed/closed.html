@@ -27,8 +27,7 @@ body{
 .box{
   position:relative;
   z-index:1;
-
-  background:white;
+  background:white !important; /* ←ここで白固定 */
   padding:40px;
   border-radius:12px;
   box-shadow:0 10px 30px rgba(0,0,0,0.1);
@@ -43,6 +42,7 @@ p{
 }
 
 footer{
+  background:white !important; /* ←フッターも白 */
   margin-top:20px;
   font-size:14px;
   color:#777;
