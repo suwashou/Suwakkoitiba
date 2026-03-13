@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,13 +14,15 @@ font-family:sans-serif;
 background:#f5f7fb;
 display:flex;
 justify-content:center;
-align-items:center;
-height:100vh;
+align-items:flex-start;
+min-height:100vh;
+padding-top:40px;
 }
 
 .container{
 width:360px;
 text-align:center;
+margin:auto;
 }
 
 .screen{
@@ -38,6 +41,9 @@ margin-bottom:40px;
 button{
 border:none;
 cursor:pointer;
+display:block;
+margin-left:auto;
+margin-right:auto;
 }
 
 .big{
@@ -62,7 +68,7 @@ height:100px;
 border-radius:50%;
 font-size:30px;
 color:white;
-margin:10px;
+margin:10px auto;
 }
 
 .green{background:green}
@@ -103,6 +109,11 @@ margin-top:30px;
 font-size:28px;
 }
 
+#ranking{
+max-height:80vh;
+overflow-y:auto;
+}
+
 </style>
 </head>
 
@@ -117,14 +128,13 @@ font-size:28px;
 <div class="title" id="title"></div>
 
 <button class="big green" id="startMenuBtn"></button>
-<br><br>
+<br>
 
 <button class="mid orange" id="rankingMenuBtn"></button>
 
-<br><br>
+<br>
 
 <button class="circle blue" onclick="openHelp()">❓</button>
-
 <button class="circle purple" onclick="toggleLang()" id="langBtn"></button>
 
 </div>
@@ -214,7 +224,7 @@ updateLanguage()
 }
 
 //================
-// Texts
+// Text update
 //================
 
 function updateLanguage(){
@@ -261,17 +271,17 @@ language==="jp"
 `絵文字を覚えてください。
 消えたら同じ順番で押します。
 
-簡単: 1個
-普通: 最大4個
-難しい: 最大8個
-エクスプレス: どんどん速くなる`
+簡単:1個
+普通:最大4個
+難しい:最大8個
+エクスプレス:どんどん速くなる`
 :
 `Remember the emojis.
 Tap them in the same order.
 
-Easy: 1 emoji
-Normal: up to 4
-Hard: up to 8
+Easy:1 emoji
+Normal:up to 4
+Hard:up to 8
 Express: gets faster`
 
 }
@@ -323,51 +333,30 @@ const emojiList=["😀","😃","😄","😁","😆","😅","😂","🤣","🙂",
 // Ranking
 //================
 
-let scores={
-easy:[],
-normal:[],
-hard:[],
-express:[]
-}
+let scores={easy:[],normal:[],hard:[],express:[]}
 
 function loadRanking(){
-
 let data=localStorage.getItem("ranking")
-
 if(data) scores=JSON.parse(data)
-
 }
 
 function saveRanking(){
-
 localStorage.setItem("ranking",JSON.stringify(scores))
-
 }
 
 function isRanking(score,d){
-
 let arr=scores[d]
-
 if(arr.length<5) return true
-
 return score>arr[arr.length-1]
-
 }
 
 function addScore(score,d){
-
 let arr=scores[d]
-
 arr.push(score)
-
 arr.sort((a,b)=>b-a)
-
 if(arr.length>5) arr=arr.slice(0,5)
-
 scores[d]=arr
-
 saveRanking()
-
 }
 
 loadRanking()
@@ -377,18 +366,11 @@ loadRanking()
 //================
 
 function show(id){
-
 document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
-
 document.getElementById(id).classList.add("active")
-
 }
 
-function showMenu(){
-
-show("menu")
-
-}
+function showMenu(){show("menu")}
 
 //================
 // Level
@@ -401,21 +383,16 @@ document.getElementById("startBtn").onclick=startGame
 function openLevel(){
 
 let box=document.getElementById("levelButtons")
-
 box.innerHTML=""
 
 difficulties.forEach(d=>{
 
 let btn=document.createElement("button")
-
 btn.className="mid blue"
-
 btn.innerText=difficultyText(d)
-
 btn.onclick=()=>start(d)
 
 box.appendChild(btn)
-
 box.appendChild(document.createElement("br"))
 box.appendChild(document.createElement("br"))
 
@@ -480,30 +457,20 @@ choices=[]
 document.getElementById("choices").innerHTML=""
 
 for(let i=0;i<count();i++){
-
-targets.push(
-emojiList[Math.floor(Math.random()*emojiList.length)]
-)
-
+targets.push(emojiList[Math.floor(Math.random()*emojiList.length)])
 }
 
 let set=new Set(targets)
 
 while(set.size<8){
-
-set.add(
-emojiList[Math.floor(Math.random()*emojiList.length)]
-)
-
+set.add(emojiList[Math.floor(Math.random()*emojiList.length)])
 }
 
 choices=[...set].sort(()=>Math.random()-0.5)
 
 showTargets()
 
-let time = difficulty==="express"
-? Math.max(0.5,2-score*0.1)
-: 2
+let time=difficulty==="express"?Math.max(0.5,2-score*0.1):2
 
 setTimeout(showChoices,time*1000)
 
@@ -512,19 +479,13 @@ setTimeout(showChoices,time*1000)
 function showTargets(){
 
 let div=document.getElementById("targets")
-
 div.innerHTML=""
 
 targets.forEach(e=>{
-
 let span=document.createElement("span")
-
 span.className="target"
-
 span.innerText=e
-
 div.appendChild(span)
-
 })
 
 }
@@ -534,28 +495,19 @@ function showChoices(){
 document.getElementById("targets").innerHTML=""
 
 let grid=document.getElementById("choices")
-
 grid.innerHTML=""
 
 choices.forEach(e=>{
-
 let btn=document.createElement("button")
-
 btn.innerText=e
-
 btn.onclick=()=>check(e)
-
 grid.appendChild(btn)
-
 })
 
 }
 
 function updateScore(){
-
-document.getElementById("score").innerText =
-(language==="jp"?"スコア ":"Score ")+score
-
+document.getElementById("score").innerText=(language==="jp"?"スコア ":"Score ")+score
 }
 
 function check(e){
@@ -572,20 +524,11 @@ combo++
 updateScore()
 
 if(combo>1){
-
-document.getElementById("combo").innerText =
-(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo
-
+document.getElementById("combo").innerText=(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo
 }
 
 if(isRanking(score,difficulty)){
-
-if(!scores[difficulty].includes(score)){
-
-addScore(score,difficulty)
-
-}
-
+if(!scores[difficulty].includes(score)) addScore(score,difficulty)
 }
 
 newQuestion()
@@ -609,15 +552,12 @@ showMenu()
 function openRanking(){
 
 let box=document.getElementById("rankingList")
-
 box.innerHTML=""
 
 difficulties.forEach(d=>{
 
 let title=document.createElement("h2")
-
 title.innerText=difficultyText(d)
-
 box.appendChild(title)
 
 let arr=scores[d]
@@ -625,11 +565,9 @@ let arr=scores[d]
 for(let i=0;i<5;i++){
 
 let div=document.createElement("div")
-
 div.className="rank"
 
-div.innerText =
-i<arr.length
+div.innerText=i<arr.length
 ? (language==="jp"?`${i+1}位: ${arr[i]}`:`${i+1}: ${arr[i]}`)
 : (language==="jp"?`${i+1}位: ---`:`${i+1}: ---`)
 
@@ -648,9 +586,7 @@ show("ranking")
 //================
 
 function openHelp(){
-
 show("help")
-
 }
 
 updateLanguage()
@@ -659,3 +595,4 @@ updateLanguage()
 
 </body>
 </html>
+```
