@@ -11,26 +11,33 @@ body{
 margin:0;
 font-family:sans-serif;
 background:#f5f7fb;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+width:360px;
 text-align:center;
 }
 
 .screen{
 display:none;
-padding-top:40px;
 }
 
 .active{
 display:block;
 }
 
-button{
-border:none;
-cursor:pointer;
-}
-
 .title{
 font-size:50px;
 margin-bottom:40px;
+}
+
+button{
+border:none;
+cursor:pointer;
 }
 
 .big{
@@ -42,7 +49,7 @@ color:white;
 }
 
 .mid{
-font-size:32px;
+font-size:30px;
 width:260px;
 height:80px;
 border-radius:20px;
@@ -55,6 +62,7 @@ height:100px;
 border-radius:50%;
 font-size:30px;
 color:white;
+margin:10px;
 }
 
 .green{background:green}
@@ -66,8 +74,7 @@ color:white;
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
-max-width:320px;
-margin:auto;
+margin-top:20px;
 }
 
 .grid button{
@@ -91,11 +98,17 @@ color:red;
 font-size:26px;
 }
 
+.back{
+margin-top:30px;
+font-size:28px;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="container">
 
 <!-- MENU -->
 
@@ -112,7 +125,7 @@ font-size:26px;
 
 <button class="circle blue" onclick="openHelp()">❓</button>
 
-<button class="circle purple" id="langBtn" onclick="toggleLang()">EN</button>
+<button class="circle purple" onclick="toggleLang()" id="langBtn">EN</button>
 
 </div>
 
@@ -126,8 +139,7 @@ font-size:26px;
 
 <div id="levelButtons"></div>
 
-<br>
-<button onclick="showMenu()">戻る</button>
+<button class="back" onclick="showMenu()">戻る</button>
 
 </div>
 
@@ -138,19 +150,18 @@ font-size:26px;
 <div id="game" class="screen">
 
 <div id="score">スコア 0</div>
+
 <div id="combo"></div>
 
 <br>
 
 <button id="startBtn" class="big green" onclick="startGame()">スタート</button>
 
-<br><br>
-
 <div id="targets"></div>
 
-<br>
-
 <div id="choices" class="grid"></div>
+
+<button class="back" onclick="showMenu()">戻る</button>
 
 </div>
 
@@ -160,13 +171,11 @@ font-size:26px;
 
 <div id="ranking" class="screen">
 
-<h1 id="rankingTitle">🏆 ランキング</h1>
+<h1>🏆 ランキング</h1>
 
 <div id="rankingList"></div>
 
-<br>
-
-<button onclick="showMenu()">戻る</button>
+<button class="back" onclick="showMenu()">戻る</button>
 
 </div>
 
@@ -180,9 +189,9 @@ font-size:26px;
 
 <div id="helpText"></div>
 
-<br>
+<button class="back" onclick="showMenu()">OK</button>
 
-<button onclick="showMenu()">OK</button>
+</div>
 
 </div>
 
@@ -190,9 +199,7 @@ font-size:26px;
 
 <script>
 
-//=========================
 // language
-//=========================
 
 let language="jp"
 
@@ -200,18 +207,18 @@ function toggleLang(){
 
 language = language==="jp"?"en":"jp"
 
-document.getElementById("langBtn").innerText = language==="jp"?"EN":"JP"
-
-document.getElementById("title").innerText =
-language==="jp"?"🧠 メモリーゲーム":"🧠 Memory Game"
+document.getElementById("langBtn").innerText =
+language==="jp"?"EN":"JP"
 
 }
 
-//=========================
+
+
 // difficulties
-//=========================
 
 const difficulties=["easy","normal","hard","express"]
+
+
 
 function difficultyText(d){
 
@@ -237,34 +244,24 @@ express:"Expert"
 
 }
 
-//=========================
-// emoji list
-//=========================
+
+
+// emoji
 
 const emojiList=[
-
-"😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃","😉","😊",
-"😇","🥰","😍","🤩","😘","😗","😚","😙",
-
-"🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷","🐸","🐵",
-
-"🍎","🍏","🍊","🍋","🍌","🍉","🍇","🍓","🍒","🍑","🍍",
-
-"🚗","🚕","🚙","🚌","🚎","🏎","🚓","🚑","🚒",
-
-"⚽","🏀","🏈","⚾","🎾","🏐","🏉",
-
-"🎸","🎹","🥁","🎺","🎻","🎷","🎤","🎧",
-
-"🌸","🌹","🌺","🌻","🌼","🌷",
-
-"⭐","🌟","✨","⚡","🔥","💧","🌈","☀️","🌙","❄️","☁️"
-
+"😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃",
+"🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼",
+"🍎","🍊","🍋","🍌","🍉","🍇","🍓",
+"🚗","🚕","🚙","🚌","🚎","🏎",
+"⚽","🏀","🏈","⚾","🎾",
+"🎸","🎹","🥁","🎺","🎻",
+"🌸","🌹","🌺","🌻",
+"⭐","🌟","✨","⚡","🔥"
 ]
 
-//=========================
+
+
 // ranking
-//=========================
 
 let scores={
 easy:[],
@@ -315,9 +312,9 @@ saveRanking()
 
 loadRanking()
 
-//=========================
-// screen control
-//=========================
+
+
+// screen
 
 function show(id){
 
@@ -333,9 +330,9 @@ show("menu")
 
 }
 
-//=========================
+
+
 // level select
-//=========================
 
 function openLevel(){
 
@@ -364,9 +361,9 @@ show("level")
 
 }
 
-//=========================
-// game variables
-//=========================
+
+
+// game
 
 let difficulty
 let targets=[]
@@ -375,35 +372,28 @@ let index=0
 let score=0
 let combo=0
 
-//=========================
-// start
-//=========================
+
 
 function start(d){
 
 difficulty=d
-
 score=0
 combo=0
-
 index=0
 
-targets=[]
-choices=[]
-
-document.getElementById("score").innerText =
-language==="jp"?"スコア 0":"Score 0"
-
+document.getElementById("score").innerText="スコア 0"
 document.getElementById("combo").innerText=""
-
-document.getElementById("startBtn").style.display="block"
 
 document.getElementById("targets").innerHTML=""
 document.getElementById("choices").innerHTML=""
 
+document.getElementById("startBtn").style.display="block"
+
 show("game")
 
 }
+
+
 
 function startGame(){
 
@@ -413,25 +403,18 @@ newQuestion()
 
 }
 
-//=========================
-// count
-//=========================
+
 
 function count(){
 
 if(difficulty==="easy") return 1
-
 if(difficulty==="normal") return Math.min(score+1,4)
-
 if(difficulty==="hard") return Math.min(score+1,8)
-
 if(difficulty==="express") return Math.min(score+1,8)
 
 }
 
-//=========================
-// new question
-//=========================
+
 
 function newQuestion(){
 
@@ -442,6 +425,8 @@ choices=[]
 
 document.getElementById("choices").innerHTML=""
 
+
+
 for(let i=0;i<count();i++){
 
 targets.push(
@@ -449,6 +434,8 @@ emojiList[Math.floor(Math.random()*emojiList.length)]
 )
 
 }
+
+
 
 let set=new Set(targets)
 
@@ -460,21 +447,27 @@ emojiList[Math.floor(Math.random()*emojiList.length)]
 
 }
 
+
+
 choices=[...set].sort(()=>Math.random()-0.5)
 
+
+
 showTargets()
+
+
 
 let time = difficulty==="express"
 ? Math.max(0.5,2-score*0.1)
 : 2
 
+
+
 setTimeout(showChoices,time*1000)
 
 }
 
-//=========================
-// show targets
-//=========================
+
 
 function showTargets(){
 
@@ -496,17 +489,19 @@ div.appendChild(span)
 
 }
 
-//=========================
-// show choices
-//=========================
+
 
 function showChoices(){
 
 document.getElementById("targets").innerHTML=""
 
+
+
 let grid=document.getElementById("choices")
 
 grid.innerHTML=""
+
+
 
 choices.forEach(e=>{
 
@@ -522,9 +517,7 @@ grid.appendChild(btn)
 
 }
 
-//=========================
-// check answer
-//=========================
+
 
 function check(e){
 
@@ -535,18 +528,21 @@ index++
 if(index>=targets.length){
 
 score++
-
 combo++
 
-document.getElementById("score").innerText =
-(language==="jp"?"スコア ":"Score ")+score
+
+
+document.getElementById("score").innerText="スコア "+score
+
+
 
 if(combo>1){
 
-document.getElementById("combo").innerText =
-(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo
+document.getElementById("combo").innerText="🔥 コンボ "+combo
 
 }
+
+
 
 if(isRanking(score,difficulty)){
 
@@ -558,15 +554,15 @@ addScore(score,difficulty)
 
 }
 
+
+
 newQuestion()
 
 }
 
 }else{
 
-combo=0
-
-alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score)
+alert("ゲームオーバー\nスコア "+score)
 
 showMenu()
 
@@ -574,15 +570,17 @@ showMenu()
 
 }
 
-//=========================
-// ranking view
-//=========================
+
+
+// ranking
 
 function openRanking(){
 
 let box=document.getElementById("rankingList")
 
 box.innerHTML=""
+
+
 
 difficulties.forEach(d=>{
 
@@ -592,6 +590,8 @@ title.innerText=difficultyText(d)
 
 box.appendChild(title)
 
+
+
 let arr=scores[d]
 
 for(let i=0;i<5;i++){
@@ -600,10 +600,14 @@ let div=document.createElement("div")
 
 div.className="rank"
 
+
+
 div.innerText=
 i<arr.length
-? (i+1)+": "+arr[i]
-: (i+1)+": ---"
+? (i+1)+"位: "+arr[i]
+: (i+1)+"位: ---"
+
+
 
 box.appendChild(div)
 
@@ -611,35 +615,29 @@ box.appendChild(div)
 
 })
 
+
+
 show("ranking")
 
 }
 
-//=========================
+
+
 // help
-//=========================
 
 function openHelp(){
 
-document.getElementById("helpText").innerText =
+document.getElementById("helpText").innerText=
 
-language==="jp"
-?
 `絵文字を覚えてください。
 消えたら同じ順番で押します。
 
-簡単: 1個
-普通: 最大4個
-難しい: 最大8個
-エクスプレス: どんどん速くなる`
-:
-`Remember the emojis.
-Tap them in the same order.
+簡単:1個
+普通:最大4個
+難しい:最大8個
+エキスプレス:どんどん速くなる`
 
-Easy: 1 emoji
-Normal: up to 4
-Hard: up to 8
-Express: gets faster`
+
 
 show("help")
 
