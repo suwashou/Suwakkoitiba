@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,18 +17,9 @@ align-items:center;
 height:100vh;
 }
 
-.container{
-text-align:center;
-}
+.screen{display:none;text-align:center}
 
-/* タイトル */
-
-.title{
-font-size:50px;
-margin-bottom:50px;
-}
-
-/* ボタン */
+.title{font-size:50px;margin-bottom:40px}
 
 button{
 border:none;
@@ -35,89 +27,51 @@ border-radius:20px;
 cursor:pointer;
 color:white;
 font-weight:600;
-box-shadow:0 6px 12px rgba(0,0,0,0.15);
 }
 
-/* メニュー */
-
-.bigBtn{
+.big{
 width:260px;
 height:90px;
 font-size:40px;
-margin:15px 0;
+margin:10px;
 }
 
-.start{background:#34c759;}
-.rank{background:#ff9f0a;}
+.start{background:#34c759}
+.rank{background:#ff9f0a}
 
-.circleArea{
-margin-top:40px;
-display:flex;
-justify-content:center;
-gap:40px;
-}
-
-.circleBtn{
+.circle{
 width:100px;
 height:100px;
 border-radius:50%;
 font-size:40px;
+margin:10px;
 }
 
-.help{background:#0a84ff;}
-.lang{background:#af52de;}
-
-/* 難易度 */
+.blue{background:#0a84ff}
+.purple{background:#af52de}
 
 .levelBtn{
 width:260px;
 height:80px;
 font-size:32px;
 background:#0a84ff;
-margin:10px 0;
+margin:10px;
 }
 
-/* 戻る */
-
-.backBtn{
+.back{
 margin-top:30px;
 font-size:28px;
 color:black;
 background:none;
-box-shadow:none;
 }
-
-/* スコア */
-
-.score{
-font-size:30px;
-margin-bottom:10px;
-}
-
-.combo{
-font-size:24px;
-color:red;
-margin-bottom:20px;
-}
-
-/* 絵文字 */
-
-#targets{
-font-size:70px;
-margin:30px 0;
-min-height:90px;
-}
-
-/* グリッド */
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,90px);
 gap:20px;
 justify-content:center;
+margin-top:20px;
 }
-
-/* 絵文字ボタン */
 
 .emojiBtn{
 font-size:50px;
@@ -127,109 +81,103 @@ background:#0a84ff;
 border-radius:15px;
 }
 
-/* 画面 */
+#targets{font-size:70px;height:90px}
 
-.screen{display:none;}
+.combo{color:red;font-size:24px}
 
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div id="menu" class="screen">
 
-<!-- MENU -->
+<div id="title" class="title"></div>
 
-<div id="menu">
+<button class="big start" onclick="showLevel()" id="startBtn"></button>
 
-<div class="title">🧠 メモリーゲーム</div>
-
-<button class="bigBtn start" onclick="showLevel()">スタート</button>
-
-<button class="bigBtn rank" onclick="showRanking()">ランキング</button>
-
-<div class="circleArea">
-<button class="circleBtn help" onclick="showHelp()">❓</button>
-</div>
-
-</div>
-
-<!-- LEVEL -->
-
-<div id="level" class="screen">
-
-<div class="title">難易度</div>
-
-<button class="levelBtn" onclick="startGame('easy')">簡単</button>
-<button class="levelBtn" onclick="startGame('normal')">普通</button>
-<button class="levelBtn" onclick="startGame('hard')">難しい</button>
-<button class="levelBtn" onclick="startGame('express')">エキスパート</button>
+<button class="big rank" onclick="showRanking()" id="rankBtn"></button>
 
 <br>
 
-<button class="backBtn" onclick="backMenu()">戻る</button>
+<button class="circle blue" onclick="showHelp()">❓</button>
+
+<button class="circle purple" onclick="toggleLang()" id="langBtn"></button>
 
 </div>
 
-<!-- GAME -->
+
+<div id="level" class="screen">
+
+<div id="levelTitle" class="title"></div>
+
+<div id="levelButtons"></div>
+
+<button class="back" onclick="backMenu()" id="back1"></button>
+
+</div>
+
 
 <div id="game" class="screen">
 
-<div id="score" class="score">スコア 0</div>
+<div id="score"></div>
 
 <div id="combo" class="combo"></div>
+
+<button id="startGameBtn" class="big start" onclick="startRound()"></button>
 
 <div id="targets"></div>
 
 <div id="choices" class="grid"></div>
 
-<button class="backBtn" onclick="backMenu()">メニュー</button>
-
 </div>
 
-<!-- HELP -->
-
-<div id="help" class="screen">
-
-<div class="title">使い方</div>
-
-<p>
-絵文字を覚えてください。<br>
-消えたら同じ順番で押します。
-</p>
-
-<p>
-簡単: 1個<br>
-普通: 最大4個<br>
-難しい: 最大8個<br>
-エキスパート: どんどん速くなる
-</p>
-
-<button class="backBtn" onclick="backMenu()">OK</button>
-
-</div>
-
-<!-- RANKING -->
 
 <div id="ranking" class="screen">
 
-<div class="title">🏆 ランキング</div>
+<div id="rankingTitle" class="title"></div>
 
 <div id="rankingList"></div>
 
-<button class="backBtn" onclick="backMenu()">戻る</button>
+<button class="back" onclick="backMenu()" id="back2"></button>
 
 </div>
 
+
+<div id="help" class="screen">
+
+<div id="helpTitle" class="title"></div>
+
+<div id="helpText"></div>
+
+<br>
+
+<button onclick="backMenu()">OK</button>
+
 </div>
+
 
 <script>
 
-let difficulty
+
+let language="jp"
+let difficulty=null
+
 let score=0
 let combo=0
-let targets=[]
 let index=0
+
+let targets=[]
+let choices=[]
+
+let showStart=true
+
+let scores={
+easy:[],
+normal:[],
+hard:[],
+express:[]
+}
 
 const emojiList=[
 "😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃",
@@ -242,132 +190,217 @@ const emojiList=[
 "⭐","✨","🔥"
 ]
 
-const menu=document.getElementById("menu")
-const level=document.getElementById("level")
-const game=document.getElementById("game")
-const help=document.getElementById("help")
-const ranking=document.getElementById("ranking")
 
-const targetsDiv=document.getElementById("targets")
-const choicesDiv=document.getElementById("choices")
-const scoreText=document.getElementById("score")
-const comboText=document.getElementById("combo")
+function show(id){
 
-function hideAll(){
+document.querySelectorAll(".screen").forEach(s=>s.style.display="none")
 
-menu.style.display="none"
-level.style.display="none"
-game.style.display="none"
-help.style.display="none"
-ranking.style.display="none"
+document.getElementById(id).style.display="block"
 
 }
+
+
+function toggleLang(){
+
+language = language==="jp" ? "en":"jp"
+
+updateText()
+
+}
+
+
+function updateText(){
+
+document.getElementById("title").innerText=
+language==="jp"?"🧠 メモリーゲーム":"🧠 Memory Game"
+
+document.getElementById("startBtn").innerText=
+language==="jp"?"スタート":"START"
+
+document.getElementById("rankBtn").innerText=
+language==="jp"?"ランキング":"Ranking"
+
+document.getElementById("langBtn").innerText=
+language==="jp"?"EN":"JP"
+
+document.getElementById("levelTitle").innerText=
+language==="jp"?"難易度":"Select Level"
+
+document.getElementById("back1").innerText=
+language==="jp"?"戻る":"Back"
+
+document.getElementById("back2").innerText=
+language==="jp"?"戻る":"Back"
+
+document.getElementById("rankingTitle").innerText=
+language==="jp"?"🏆 ランキング":"🏆 Ranking"
+
+document.getElementById("helpTitle").innerText=
+language==="jp"?"使い方":"How to Play"
+
+document.getElementById("helpText").innerText=
+language==="jp"
+?"絵文字を覚えてください。消えたら同じ順番で押します。"
+:"Remember the emojis. Tap them in the same order."
+
+document.getElementById("startGameBtn").innerText=
+language==="jp"?"スタート":"Start"
+
+}
+
 
 function showLevel(){
 
-hideAll()
-level.style.display="block"
+show("level")
+
+let div=document.getElementById("levelButtons")
+
+div.innerHTML=""
+
+const diffs=["easy","normal","hard","express"]
+
+diffs.forEach(d=>{
+
+let name={
+easy:["簡単","Easy"],
+normal:["普通","Normal"],
+hard:["難しい","Hard"],
+express:["エキスパート","Expert"]
+}
+
+let b=document.createElement("button")
+
+b.className="levelBtn"
+
+b.innerText=language==="jp"?name[d][0]:name[d][1]
+
+b.onclick=()=>startGame(d)
+
+div.appendChild(b)
+
+})
 
 }
+
+
+function backMenu(){
+
+show("menu")
+
+}
+
 
 function showHelp(){
 
-hideAll()
-help.style.display="block"
+show("help")
 
 }
+
 
 function showRanking(){
 
-hideAll()
-ranking.style.display="block"
+show("ranking")
 
 let html=""
 
-;["easy","normal","hard","express"].forEach(d=>{
+for(let d of ["easy","normal","hard","express"]){
 
-let arr=JSON.parse(localStorage.getItem("rank_"+d)||"[]")
-
-html+="<h3>"+d+"</h3>"
-
-for(let i=0;i<5;i++){
-html+=`<div>${i+1}: ${arr[i]??"---"}</div>`
+let name={
+easy:["簡単","Easy"],
+normal:["普通","Normal"],
+hard:["難しい","Hard"],
+express:["エキスパート","Expert"]
 }
 
-})
+html+="<h3>"+(language==="jp"?name[d][0]:name[d][1])+"</h3>"
+
+let arr=scores[d]
+
+for(let i=0;i<5;i++){
+
+if(arr[i]!=null){
+
+html+=language==="jp"
+?`${i+1}位: ${arr[i]}<br>`
+:`${i+1}: ${arr[i]}<br>`
+
+}else{
+
+html+=language==="jp"
+?`${i+1}位: ---<br>`
+:`${i+1}: ---<br>`
+
+}
+
+}
+
+}
 
 document.getElementById("rankingList").innerHTML=html
 
 }
 
-function backMenu(){
-
-hideAll()
-menu.style.display="block"
-
-}
 
 function startGame(diff){
 
 difficulty=diff
+
 score=0
 combo=0
 
-hideAll()
-game.style.display="block"
+showStart=true
+
+show("game")
 
 updateScore()
+
+}
+
+
+function startRound(){
+
+showStart=false
 
 newQuestion()
 
 }
 
+
+function updateScore(){
+
+document.getElementById("score").innerText=
+language==="jp"
+?`スコア ${score}`
+:`Score ${score}`
+
+document.getElementById("combo").innerText=
+combo>1
+?(language==="jp"?`🔥 コンボ ${combo}`:`🔥 Combo ${combo}`)
+:""
+
+}
+
+
 function count(){
 
-if(difficulty==="easy")return 1
-if(difficulty==="normal")return Math.min(score+1,4)
-if(difficulty==="hard")return Math.min(score+1,8)
-if(difficulty==="express")return Math.min(score+1,8)
+if(difficulty==="easy") return 1
+if(difficulty==="normal") return Math.min(score+1,4)
+if(difficulty==="hard") return Math.min(score+1,8)
+if(difficulty==="express") return Math.min(score+1,8)
 
 }
 
-function randomEmoji(){
-
-return emojiList[Math.floor(Math.random()*emojiList.length)]
-
-}
 
 function newQuestion(){
 
-targets=[]
 index=0
-
-choicesDiv.innerHTML=""
-choicesDiv.style.display="none"
+targets=[]
 
 for(let i=0;i<count();i++){
 targets.push(randomEmoji())
 }
 
-targetsDiv.innerText=targets.join(" ")
-
-let time = difficulty==="express"
-?Math.max(500,2000-score*100)
-:2000
-
-setTimeout(()=>{
-
-targetsDiv.innerText=""
-
-choicesDiv.style.display="grid"
-
-showChoices()
-
-},time)
-
-}
-
-function showChoices(){
+document.getElementById("targets").innerText=targets.join(" ")
 
 let set=new Set(targets)
 
@@ -375,24 +408,45 @@ while(set.size<8){
 set.add(randomEmoji())
 }
 
-let arr=[...set].sort(()=>Math.random()-0.5)
+choices=[...set].sort(()=>Math.random()-0.5)
 
-choicesDiv.innerHTML=""
+let time = difficulty==="express"
+?Math.max(500,2000-score*100)
+:2000
 
-arr.forEach(e=>{
+setTimeout(()=>{
+
+document.getElementById("targets").innerText=""
+
+showChoices()
+
+},time)
+
+}
+
+
+function showChoices(){
+
+let div=document.getElementById("choices")
+
+div.innerHTML=""
+
+choices.forEach(e=>{
 
 let b=document.createElement("button")
 
 b.className="emojiBtn"
+
 b.innerText=e
 
 b.onclick=()=>check(e)
 
-choicesDiv.appendChild(b)
+div.appendChild(b)
 
 })
 
 }
+
 
 function check(e){
 
@@ -406,6 +460,7 @@ score++
 combo++
 
 updateScore()
+
 saveScore()
 
 newQuestion()
@@ -414,7 +469,13 @@ newQuestion()
 
 }else{
 
-alert("ゲームオーバー\nスコア "+score)
+combo=0
+
+alert(
+language==="jp"
+?`ゲームオーバー\nスコア ${score}`
+:`Game Over\nScore ${score}`
+)
 
 backMenu()
 
@@ -422,32 +483,41 @@ backMenu()
 
 }
 
-function updateScore(){
 
-scoreText.innerText="スコア "+score
+function randomEmoji(){
 
-comboText.innerText=
-combo>1?"🔥 コンボ "+combo:""
+return emojiList[Math.floor(Math.random()*emojiList.length)]
 
 }
 
+
 function saveScore(){
 
-let key="rank_"+difficulty
+let arr=scores[difficulty]
 
-let arr=JSON.parse(localStorage.getItem(key)||"[]")
+if(arr.length<5 || score>arr[arr.length-1]){
+
+if(!arr.includes(score)){
 
 arr.push(score)
 
 arr.sort((a,b)=>b-a)
 
-arr=arr.slice(0,5)
-
-localStorage.setItem(key,JSON.stringify(arr))
+scores[difficulty]=arr.slice(0,5)
 
 }
+
+}
+
+}
+
+
+updateText()
+
+show("menu")
 
 </script>
 
 </body>
 </html>
+```
