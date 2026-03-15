@@ -137,35 +137,16 @@ const emojiList=["😀","😃","😄","😁","😆","😅","😂","🤣","🙂",
 // Ranking
 //================
 let scores={easy:[],normal:[],hard:[],express:[]}
-function loadRanking(){
-    let data=localStorage.getItem("ranking")
-    if(data) scores=JSON.parse(data)
-}
-function saveRanking(){
-    localStorage.setItem("ranking",JSON.stringify(scores))
-}
-function isRanking(score,d){
-    let arr=scores[d]
-    if(arr.length<5) return true
-    return score>arr[arr.length-1]
-}
-function addScore(score,d){
-    let arr=scores[d]
-    arr.push(score)
-    arr.sort((a,b)=>b-a)
-    if(arr.length>5) arr=arr.slice(0,5)
-    scores[d]=arr
-    saveRanking()
-}
+function loadRanking(){let data=localStorage.getItem("ranking"); if(data) scores=JSON.parse(data)}
+function saveRanking(){localStorage.setItem("ranking",JSON.stringify(scores))}
+function isRanking(score,d){let arr=scores[d]; if(arr.length<5) return true; return score>arr[arr.length-1]}
+function addScore(score,d){let arr=scores[d]; arr.push(score); arr.sort((a,b)=>b-a); if(arr.length>5) arr=arr.slice(0,5); scores[d]=arr; saveRanking()}
 loadRanking()
 
 //================
 // Screen
 //================
-function show(id){
-    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
-    document.getElementById(id).classList.add("active")
-}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); document.getElementById(id).classList.add("active")}
 function showMenu(){show("menu")}
 
 //================
@@ -230,16 +211,34 @@ function newQuestion(){
     setTimeout(showChoices,time*1000)
 }
 
+//================
+// targets 表示（正解済み＋次に押す問題も表示）
 function showTargets(){
-    let div=document.getElementById("targets"); div.innerHTML=""
-    solved.forEach(e=>{ let s=document.createElement("span"); s.className="target"; s.innerText=e; div.appendChild(s)})
+    let div = document.getElementById("targets")
+    div.innerHTML = ""
+    solved.forEach(e=>{
+        let s = document.createElement("span")
+        s.className = "target"
+        s.innerText = e
+        div.appendChild(s)
+    })
+    // 次に押す絵文字を表示（半透明でヒント）
+    if(index < targets.length){
+        let s = document.createElement("span")
+        s.className = "target"
+        s.innerText = targets[index]
+        s.style.opacity = 0.5
+        div.appendChild(s)
+    }
 }
 
+// choices ボタン
 function showChoices(){
     let grid=document.getElementById("choices"); grid.innerHTML=""
     choices.forEach(e=>{ let btn=document.createElement("button"); btn.innerText=e; btn.onclick=()=>check(e); grid.appendChild(btn)})
 }
 
+// check
 function check(e){
     let feedbackDiv = document.getElementById("targets")
     let span = document.createElement("span")
@@ -290,7 +289,6 @@ function openRanking(){
 // Help
 //================
 function openHelp(){show("help")}
-
 updateLanguage()
 </script>
 </body>
