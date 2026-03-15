@@ -145,7 +145,7 @@ margin-top:10px;
 <div id="game" class="screen">
 <div id="score"></div>
 <div id="combo"></div>
-<div id="lives"></div> <!-- 残りチャンス表示 -->
+<div id="lives"></div>
 <br>
 <button id="startBtn" class="big green"></button>
 <div id="targets"></div>
@@ -432,8 +432,8 @@ function check(e){
             alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score)
             showMenu()
         } else {
-            index = 0
-            showTargets()
+            // 次の問題に進む
+            setTimeout(newQuestion, 500)
         }
     }
 }
