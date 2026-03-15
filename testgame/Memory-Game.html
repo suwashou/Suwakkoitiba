@@ -93,55 +93,49 @@ button{border:none;cursor:pointer;display:block;margin-left:auto;margin-right:au
 //================
 // Language
 //================
-let language="jp"
-function toggleLang(){
-    language = language==="jp" ? "en" : "jp"
-    updateLanguage()
-}
+let language="jp";
+function toggleLang(){language = language==="jp" ? "en" : "jp"; updateLanguage();}
 function updateLanguage(){
-    document.getElementById("title").innerText = language==="jp" ? "🧠 メモリーゲーム" : "🧠 Memory Game"
-    document.getElementById("startMenuBtn").innerText = language==="jp" ? "スタート" : "START"
-    document.getElementById("rankingMenuBtn").innerText = language==="jp" ? "ランキング" : "Ranking"
-    document.getElementById("levelTitle").innerText = language==="jp" ? "難易度" : "Select Level"
-    document.getElementById("backLevelBtn").innerText = language==="jp" ? "戻る" : "Back"
-    document.getElementById("backGameBtn").innerText = language==="jp" ? "戻る" : "Back"
-    document.getElementById("backRankingBtn").innerText = language==="jp" ? "戻る" : "Back"
-    document.getElementById("okHelpBtn").innerText = "OK"
-    document.getElementById("rankingTitle").innerText = language==="jp" ? "🏆 ランキング" : "🏆 Ranking"
-    document.getElementById("helpTitle").innerText = language==="jp" ? "使い方" : "How to Play"
-    document.getElementById("startBtn").innerText = language==="jp" ? "スタート" : "Start"
-    document.getElementById("langBtn").innerText = language==="jp" ? "EN" : "JP"
-    document.getElementById("helpText").innerText = language==="jp" 
+    document.getElementById("title").innerText = language==="jp" ? "🧠 メモリーゲーム" : "🧠 Memory Game";
+    document.getElementById("startMenuBtn").innerText = language==="jp" ? "スタート" : "START";
+    document.getElementById("rankingMenuBtn").innerText = language==="jp" ? "ランキング" : "Ranking";
+    document.getElementById("levelTitle").innerText = language==="jp" ? "難易度" : "Select Level";
+    document.getElementById("backLevelBtn").innerText = language==="jp" ? "戻る" : "Back";
+    document.getElementById("backGameBtn").innerText = language==="jp" ? "戻る" : "Back";
+    document.getElementById("backRankingBtn").innerText = language==="jp" ? "戻る" : "Back";
+    document.getElementById("okHelpBtn").innerText = "OK";
+    document.getElementById("rankingTitle").innerText = language==="jp" ? "🏆 ランキング" : "🏆 Ranking";
+    document.getElementById("helpTitle").innerText = language==="jp" ? "使い方" : "How to Play";
+    document.getElementById("startBtn").innerText = language==="jp" ? "スタート" : "Start";
+    document.getElementById("langBtn").innerText = language==="jp" ? "EN" : "JP";
+    document.getElementById("helpText").innerText = language==="jp"
         ? `絵文字を覚えてください。\n消えたら同じ順番で押します。\n\n簡単:1個\n普通:最大4個\n難しい:最大8個\nエクスプレス:どんどん速くなる`
-        : `Remember the emojis.\nTap them in the same order.\n\nEasy:1 emoji\nNormal:up to 4\nHard:up to 8\nExpert: gets faster`
+        : `Remember the emojis.\nTap them in the same order.\n\nEasy:1 emoji\nNormal:up to 4\nHard:up to 8\nExpert: gets faster`;
 }
 
 //================
 // Difficulty
 //================
-const difficulties=["easy","normal","hard","express"]
+const difficulties=["easy","normal","hard","express"];
 function difficultyText(d){
-    if(language==="jp"){
-        return {easy:"簡単",normal:"普通",hard:"難しい",express:"エキスパート"}[d]
-    } else {
-        return {easy:"Easy",normal:"Normal",hard:"Hard",express:"Expert"}[d]
-    }
+    if(language==="jp"){return {easy:"簡単",normal:"普通",hard:"難しい",express:"エキスパート"}[d]}
+    else{return {easy:"Easy",normal:"Normal",hard:"Hard",express:"Expert"}[d]}
 }
 
 //================
 // Emoji
 //================
-const emojiList=["😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃","🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🍎","🍊","🍋","🍌","🍉","🍇","🍓","🚗","🚕","🚙","🚌","🚎","🏎","⚽","🏀","🏈","⚾","🎾","🎸","🎹","🥁","🎺","🎻","🌸","🌹","🌺","🌻","⭐","🌟","✨","⚡","🔥"]
+const emojiList=["😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃","🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🍎","🍊","🍋","🍌","🍉","🍇","🍓","🚗","🚕","🚙","🚌","🚎","🏎","⚽","🏀","🏈","⚾","🎾","🎸","🎹","🥁","🎺","🎻","🌸","🌹","🌺","🌻","⭐","🌟","✨","⚡","🔥"];
 
 //================
 // Ranking
 //================
-let scores={easy:[],normal:[],hard:[],express:[]}
-function loadRanking(){let data=localStorage.getItem("ranking"); if(data) scores=JSON.parse(data)}
-function saveRanking(){localStorage.setItem("ranking",JSON.stringify(scores))}
-function isRanking(score,d){let arr=scores[d]; if(arr.length<5) return true; return score>arr[arr.length-1]}
-function addScore(score,d){let arr=scores[d]; arr.push(score); arr.sort((a,b)=>b-a); if(arr.length>5) arr=arr.slice(0,5); scores[d]=arr; saveRanking()}
-loadRanking()
+let scores={easy:[],normal:[],hard:[],express:[]};
+function loadRanking(){let data=localStorage.getItem("ranking"); if(data) scores=JSON.parse(data);}
+function saveRanking(){localStorage.setItem("ranking",JSON.stringify(scores));}
+function isRanking(score,d){let arr=scores[d]; if(arr.length<5) return true; return score>arr[arr.length-1];}
+function addScore(score,d){let arr=scores[d]; arr.push(score); arr.sort((a,b)=>b-a); if(arr.length>5) arr=arr.slice(0,5); scores[d]=arr; saveRanking();}
+loadRanking();
 
 //================
 // Screen
@@ -152,115 +146,101 @@ function showMenu(){show("menu")}
 //================
 // Level
 //================
-document.getElementById("startMenuBtn").onclick=openLevel
-document.getElementById("rankingMenuBtn").onclick=openRanking
-document.getElementById("startBtn").onclick=startGame
+document.getElementById("startMenuBtn").onclick=openLevel;
+document.getElementById("rankingMenuBtn").onclick=openRanking;
+document.getElementById("startBtn").onclick=startGame;
 function openLevel(){
-    let box=document.getElementById("levelButtons")
-    box.innerHTML=""
+    let box=document.getElementById("levelButtons"); box.innerHTML="";
     difficulties.forEach(d=>{
-        let btn=document.createElement("button")
-        btn.className="mid blue"
-        btn.innerText=difficultyText(d)
-        btn.onclick=()=>start(d)
-        box.appendChild(btn)
-        box.appendChild(document.createElement("br"))
-        box.appendChild(document.createElement("br"))
-    })
-    show("level")
+        let btn=document.createElement("button"); btn.className="mid blue"; btn.innerText=difficultyText(d); btn.onclick=()=>start(d);
+        box.appendChild(btn); box.appendChild(document.createElement("br")); box.appendChild(document.createElement("br"));
+    });
+    show("level");
 }
 
 //================
 // Game Logic
 //================
-let difficulty, targets=[], choices=[], index=0, score=0, combo=0, mistakes=0, solved=[]
-const maxMistakes = 3
+let difficulty, targets=[], choices=[], index=0, score=0, combo=0, mistakes=0, solved=[];
+const maxMistakes = 3;
 
 function start(d){
-    difficulty = d; score=0; combo=0; index=0; mistakes=0; solved=[]
-    updateScore(); updateLives()
-    document.getElementById("targets").innerHTML=""
-    document.getElementById("choices").innerHTML=""
-    document.getElementById("startBtn").style.display="block"
-    document.getElementById("combo").innerText = ""
-    show("game")
+    difficulty = d; score=0; combo=0; index=0; mistakes=0; solved=[];
+    updateScore(); updateLives();
+    document.getElementById("targets").innerHTML="";
+    document.getElementById("choices").innerHTML="";
+    document.getElementById("startBtn").style.display="block";
+    document.getElementById("combo").innerText="";
+    show("game");
 }
 
 function startGame(){
-    document.getElementById("startBtn").style.display="none"
-    newQuestion()
+    document.getElementById("startBtn").style.display="none";
+    newQuestion();
 }
 
 function count(){
-    if(difficulty==="easy") return 1
-    if(difficulty==="normal") return Math.min(score+1,4)
-    if(difficulty==="hard") return Math.min(score+1,8)
-    if(difficulty==="express") return Math.min(score+1,8)
-}
-
-function newQuestion(){
-    index=0; solved=[]
-    targets=[]; choices=[]
-    document.getElementById("choices").innerHTML=""
-    for(let i=0;i<count();i++) targets.push(emojiList[Math.floor(Math.random()*emojiList.length)])
-    let set=new Set(targets)
-    while(set.size<8) set.add(emojiList[Math.floor(Math.random()*emojiList.length)])
-    choices=[...set].sort(()=>Math.random()-0.5)
-    showTargets()
-    let time=difficulty==="express"?Math.max(0.5,2-score*0.1):2
-    setTimeout(showChoices,time*1000)
+    if(difficulty==="easy") return 1;
+    if(difficulty==="normal") return Math.min(score+1,4);
+    if(difficulty==="hard") return Math.min(score+1,8);
+    if(difficulty==="express") return Math.min(score+1,8);
 }
 
 //================
-// targets 表示（正解済み＋次に押す問題も表示）
-function showTargets(){
-    let div = document.getElementById("targets")
-    div.innerHTML = ""
-    solved.forEach(e=>{
-        let s = document.createElement("span")
-        s.className = "target"
-        s.innerText = e
-        div.appendChild(s)
-    })
-    // 次に押す絵文字を表示（半透明でヒント）
-    if(index < targets.length){
-        let s = document.createElement("span")
-        s.className = "target"
-        s.innerText = targets[index]
-        s.style.opacity = 0.5
-        div.appendChild(s)
+// 新しい問題作成（問題を1秒表示後、選択肢出現）
+function newQuestion(){
+    index=0; solved=[]; targets=[]; choices=[];
+    document.getElementById("choices").innerHTML="";
+
+    for(let i=0;i<count();i++){
+        targets.push(emojiList[Math.floor(Math.random()*emojiList.length)]);
     }
+
+    let set=new Set(targets);
+    while(set.size<8) set.add(emojiList[Math.floor(Math.random()*emojiList.length)]);
+    choices=[...set].sort(()=>Math.random()-0.5);
+
+    // 問題を表示
+    showTargets();
+
+    // 1秒後に問題を消して選択肢を表示
+    setTimeout(()=>{
+        document.getElementById("targets").innerHTML="";
+        showChoices();
+    }, 1000);
 }
 
-// choices ボタン
+function showTargets(){
+    let div = document.getElementById("targets");
+    div.innerHTML="";
+    targets.forEach(e=>{
+        let s=document.createElement("span");
+        s.className="target";
+        s.innerText=e;
+        div.appendChild(s);
+    });
+}
+
 function showChoices(){
-    let grid=document.getElementById("choices"); grid.innerHTML=""
-    choices.forEach(e=>{ let btn=document.createElement("button"); btn.innerText=e; btn.onclick=()=>check(e); grid.appendChild(btn)})
+    let grid=document.getElementById("choices"); grid.innerHTML="";
+    choices.forEach(e=>{ let btn=document.createElement("button"); btn.innerText=e; btn.onclick=()=>check(e); grid.appendChild(btn); });
 }
 
-// check
 function check(e){
-    let feedbackDiv = document.getElementById("targets")
-    let span = document.createElement("span")
-    span.className = "target"
-
     if(e === targets[index]){
-        solved.push(e); index++
-        showTargets()
+        solved.push(e); index++;
         if(index >= targets.length){
-            span.innerText="◯"; span.style.color="green"; feedbackDiv.appendChild(span)
-            score++; combo++; updateScore()
-            if(combo>1) document.getElementById("combo").innerText=(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo
-            if(isRanking(score,difficulty)) if(!scores[difficulty].includes(score)) addScore(score,difficulty)
-            setTimeout(newQuestion,1000)
+            score++; combo++; updateScore();
+            if(combo>1) document.getElementById("combo").innerText=(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo;
+            if(isRanking(score,difficulty)) if(!scores[difficulty].includes(score)) addScore(score,difficulty);
+            setTimeout(newQuestion, 500);
         }
     } else {
-        span.innerText="✕"; span.style.color="red"; feedbackDiv.appendChild(span)
-        mistakes++; updateLives(); combo=0; document.getElementById("combo").innerText=""
+        mistakes++; updateLives(); combo=0; document.getElementById("combo").innerText="";
         if(mistakes>=maxMistakes){
-            setTimeout(()=>{alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score); showMenu()},1000)
+            setTimeout(()=>{alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score); showMenu()},500);
         } else {
-            setTimeout(()=>{feedbackDiv.innerHTML=""; showTargets(); showChoices()},500)
+            index=0; solved=[]; showChoices(); // 間違えた部分だけリセット
         }
     }
 }
@@ -272,24 +252,24 @@ function updateLives(){document.getElementById("lives").innerText=(language==="j
 // Ranking
 //================
 function openRanking(){
-    let box=document.getElementById("rankingList"); box.innerHTML=""
+    let box=document.getElementById("rankingList"); box.innerHTML="";
     difficulties.forEach(d=>{
-        let title=document.createElement("h2"); title.innerText=difficultyText(d); box.appendChild(title)
-        let arr=scores[d]
+        let title=document.createElement("h2"); title.innerText=difficultyText(d); box.appendChild(title);
+        let arr=scores[d];
         for(let i=0;i<5;i++){
-            let div=document.createElement("div"); div.className="rank"
-            div.innerText=i<arr.length ? (language==="jp"?`${i+1}位: ${arr[i]}`:`${i+1}: ${arr[i]}`) : (language==="jp"?`${i+1}位: ---`:`${i+1}: ---`)
-            box.appendChild(div)
+            let div=document.createElement("div"); div.className="rank";
+            div.innerText=i<arr.length ? (language==="jp"?`${i+1}位: ${arr[i]}`:`${i+1}: ${arr[i]}`) : (language==="jp"?`${i+1}位: ---`:`${i+1}: ---`);
+            box.appendChild(div);
         }
-    })
-    show("ranking")
+    });
+    show("ranking");
 }
 
 //================
 // Help
 //================
-function openHelp(){show("help")}
-updateLanguage()
+function openHelp(){show("help");}
+updateLanguage();
 </script>
 </body>
 </html>
