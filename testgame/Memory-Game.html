@@ -200,47 +200,37 @@ function newQuestion(){
     while(set.size<8) set.add(emojiList[Math.floor(Math.random()*emojiList.length)]);
     choices=[...set].sort(()=>Math.random()-0.5);
 
-    // 問題を表示
     showTargets();
-
-    // 1秒後に問題を消して選択肢を表示
-    setTimeout(()=>{
-        document.getElementById("targets").innerHTML="";
-        showChoices();
-    }, 1000);
+    setTimeout(()=>{document.getElementById("targets").innerHTML=""; showChoices();},1000);
 }
 
 function showTargets(){
-    let div = document.getElementById("targets");
-    div.innerHTML="";
-    targets.forEach(e=>{
-        let s=document.createElement("span");
-        s.className="target";
-        s.innerText=e;
-        div.appendChild(s);
-    });
+    let div = document.getElementById("targets"); div.innerHTML="";
+    targets.forEach(e=>{let s=document.createElement("span"); s.className="target"; s.innerText=e; div.appendChild(s);});
 }
 
 function showChoices(){
     let grid=document.getElementById("choices"); grid.innerHTML="";
-    choices.forEach(e=>{ let btn=document.createElement("button"); btn.innerText=e; btn.onclick=()=>check(e); grid.appendChild(btn); });
+    choices.forEach(e=>{let btn=document.createElement("button"); btn.innerText=e; btn.onclick=()=>check(e); grid.appendChild(btn);});
 }
 
 function check(e){
+    // 即判定
     if(e === targets[index]){
         solved.push(e); index++;
         if(index >= targets.length){
             score++; combo++; updateScore();
             if(combo>1) document.getElementById("combo").innerText=(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo;
             if(isRanking(score,difficulty)) if(!scores[difficulty].includes(score)) addScore(score,difficulty);
-            setTimeout(newQuestion, 500);
+            newQuestion(); // 次の問題へ瞬時に移動
         }
     } else {
         mistakes++; updateLives(); combo=0; document.getElementById("combo").innerText="";
-        if(mistakes>=maxMistakes){
-            setTimeout(()=>{alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score); showMenu()},500);
+        if(mistakes >= maxMistakes){
+            alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score);
+            showMenu();
         } else {
-            index=0; solved=[]; showChoices(); // 間違えた部分だけリセット
+            index=0; solved=[]; showChoices(); // 間違った部分だけリセット
         }
     }
 }
