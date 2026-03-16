@@ -1,6 +1,6 @@
 (() => {
 
-const owner="teto-developer";
+const owner="suwashou";
 const repo="Suwakkoitiba";
 const branch="main";
 
