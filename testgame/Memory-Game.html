@@ -27,10 +27,7 @@ margin:auto;
 .screen{display:none;}
 .active{display:block;}
 
-.title{
-font-size:50px;
-margin-bottom:40px;
-}
+.title{font-size:50px;margin-bottom:40px;}
 
 button{
 border:none;
@@ -40,21 +37,8 @@ margin-left:auto;
 margin-right:auto;
 }
 
-.big{
-font-size:40px;
-width:260px;
-height:90px;
-border-radius:20px;
-color:white;
-}
-
-.mid{
-font-size:30px;
-width:260px;
-height:80px;
-border-radius:20px;
-color:white;
-}
+.big{font-size:40px;width:260px;height:90px;border-radius:20px;color:white;}
+.mid{font-size:30px;width:260px;height:80px;border-radius:20px;color:white;}
 
 .circle{
 width:100px;
@@ -91,24 +75,11 @@ transform:scale(0.9);
 background:#1565c0;
 }
 
-.target{
-font-size:70px;
-margin:5px;
-}
+.target{font-size:70px;margin:5px;}
 
-.combo{
-font-size:24px;
-color:red;
-}
-
-.rank{
-font-size:26px;
-}
-
-.back{
-margin-top:30px;
-font-size:28px;
-}
+.combo{font-size:24px;color:red;}
+.rank{font-size:26px;}
+.back{margin-top:30px;font-size:28px;}
 
 #ranking{
 max-height:80vh;
@@ -121,7 +92,7 @@ color:red;
 margin-top:10px;
 }
 
-/* 判定表示 */
+/* 判定 */
 
 #mark{
 position:fixed;
@@ -133,21 +104,6 @@ display:none;
 z-index:999;
 }
 
-/* 正解履歴 */
-
-#progress{
-font-size:40px;
-margin-top:10px;
-}
-
-.done{
-opacity:1;
-}
-
-.todo{
-opacity:0.3;
-}
-
 </style>
 </head>
 
@@ -155,27 +111,40 @@ opacity:0.3;
 
 <div class="container">
 
+<!-- MENU -->
+
 <div id="menu" class="screen active">
 
-<div class="title">🧠 メモリーゲーム</div>
+<div class="title" id="title"></div>
 
-<button class="big green" onclick="openLevel()">スタート</button>
+<button class="big green" id="startMenuBtn"></button>
 
 <br>
 
-<button class="mid orange" onclick="openRanking()">ランキング</button>
+<button class="mid orange" id="rankingMenuBtn"></button>
+
+<br>
+
+<button class="circle blue" onclick="openHelp()">❓</button>
+<button class="circle purple" onclick="toggleLang()" id="langBtn"></button>
 
 </div>
+
+
+<!-- LEVEL -->
 
 <div id="level" class="screen">
 
-<h1>難易度</h1>
+<h1 id="levelTitle"></h1>
 
 <div id="levelButtons"></div>
 
-<button class="back" onclick="showMenu()">戻る</button>
+<button class="back" onclick="showMenu()" id="backLevelBtn"></button>
 
 </div>
+
+
+<!-- GAME -->
 
 <div id="game" class="screen">
 
@@ -183,27 +152,41 @@ opacity:0.3;
 <div id="combo"></div>
 <div id="lives"></div>
 
-<div id="progress"></div>
-
 <br>
 
-<button id="startBtn" class="big green" onclick="startGame()">スタート</button>
+<button id="startBtn" class="big green"></button>
 
 <div id="targets"></div>
 
 <div id="choices" class="grid"></div>
 
-<button class="back" onclick="showMenu()">戻る</button>
+<button class="back" onclick="showMenu()" id="backGameBtn"></button>
 
 </div>
 
+
+<!-- RANKING -->
+
 <div id="ranking" class="screen">
 
-<h1>🏆 ランキング</h1>
+<h1 id="rankingTitle"></h1>
 
 <div id="rankingList"></div>
 
-<button class="back" onclick="showMenu()">戻る</button>
+<button class="back" onclick="showMenu()" id="backRankingBtn"></button>
+
+</div>
+
+
+<!-- HELP -->
+
+<div id="help" class="screen">
+
+<h1 id="helpTitle"></h1>
+
+<div id="helpText"></div>
+
+<button class="back" onclick="showMenu()" id="okHelpBtn"></button>
 
 </div>
 
@@ -212,6 +195,63 @@ opacity:0.3;
 <div id="mark"></div>
 
 <script>
+
+//================
+// Language
+//================
+
+let language="jp";
+
+function toggleLang(){
+language = language==="jp" ? "en" : "jp";
+updateLanguage();
+}
+
+function updateLanguage(){
+
+document.getElementById("title").innerText = language==="jp" ? "🧠 メモリーゲーム" : "🧠 Memory Game";
+document.getElementById("startMenuBtn").innerText = language==="jp" ? "スタート" : "START";
+document.getElementById("rankingMenuBtn").innerText = language==="jp" ? "ランキング" : "Ranking";
+
+document.getElementById("levelTitle").innerText = language==="jp" ? "難易度" : "Select Level";
+
+document.getElementById("backLevelBtn").innerText = language==="jp" ? "戻る" : "Back";
+document.getElementById("backGameBtn").innerText = language==="jp" ? "戻る" : "Back";
+document.getElementById("backRankingBtn").innerText = language==="jp" ? "戻る" : "Back";
+
+document.getElementById("rankingTitle").innerText = language==="jp" ? "🏆 ランキング" : "🏆 Ranking";
+
+document.getElementById("helpTitle").innerText = language==="jp" ? "使い方" : "How to Play";
+
+document.getElementById("helpText").innerText = language==="jp"
+? "絵文字を覚えてください。\n消えたら同じ順番で押します。"
+: "Remember the emojis.\nTap them in the same order.";
+
+document.getElementById("startBtn").innerText = language==="jp" ? "スタート" : "Start";
+
+document.getElementById("langBtn").innerText = language==="jp" ? "EN" : "JP";
+
+}
+
+//================
+// Difficulty
+//================
+
+const difficulties=["easy","normal","hard","express"];
+
+function difficultyText(d){
+
+if(language==="jp")
+return {easy:"簡単",normal:"普通",hard:"難しい",express:"エキスパート"}[d];
+
+else
+return {easy:"Easy",normal:"Normal",hard:"Hard",express:"Expert"}[d];
+
+}
+
+//================
+// Emoji
+//================
 
 const emojiList=[
 "😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃",
@@ -224,24 +264,56 @@ const emojiList=[
 "⭐","🌟","✨","⚡","🔥"
 ];
 
-const difficulties=["easy","normal","hard","express"];
+//================
+// Ranking
+//================
 
-let difficulty;
-let targets=[];
-let choices=[];
-let index=0;
-let score=0;
-let combo=0;
-let mistakes=0;
+let scores={easy:[],normal:[],hard:[],express:[]};
 
-const maxMistakes=3;
+function loadRanking(){
+let data=localStorage.getItem("ranking");
+if(data) scores=JSON.parse(data);
+}
+
+function saveRanking(){
+localStorage.setItem("ranking",JSON.stringify(scores));
+}
+
+function isRanking(score,d){
+let arr=scores[d];
+if(arr.length<5) return true;
+return score>arr[arr.length-1];
+}
+
+function addScore(score,d){
+let arr=scores[d];
+arr.push(score);
+arr.sort((a,b)=>b-a);
+if(arr.length>5) arr=arr.slice(0,5);
+scores[d]=arr;
+saveRanking();
+}
+
+loadRanking();
+
+//================
+// Screen
+//================
 
 function show(id){
 document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-function showMenu(){show("menu");}
+function showMenu(){show("menu")}
+
+//================
+// Level
+//================
+
+document.getElementById("startMenuBtn").onclick=openLevel;
+document.getElementById("rankingMenuBtn").onclick=openRanking;
+document.getElementById("startBtn").onclick=startGame;
 
 function openLevel(){
 
@@ -252,7 +324,7 @@ difficulties.forEach(d=>{
 
 let btn=document.createElement("button");
 btn.className="mid blue";
-btn.innerText=d;
+btn.innerText=difficultyText(d);
 btn.onclick=()=>start(d);
 
 box.appendChild(btn);
@@ -262,29 +334,43 @@ box.appendChild(document.createElement("br"));
 });
 
 show("level");
+
 }
+
+//================
+// Game Logic
+//================
+
+let difficulty, targets=[], choices=[], index=0, score=0, combo=0, mistakes=0;
+
+const maxMistakes = 3;
 
 function start(d){
 
 difficulty=d;
 score=0;
 combo=0;
-mistakes=0;
 index=0;
+mistakes=0;
 
 updateScore();
 updateLives();
 
 document.getElementById("targets").innerHTML="";
 document.getElementById("choices").innerHTML="";
+
 document.getElementById("startBtn").style.display="block";
 
+document.getElementById("combo").innerText="";
+
 show("game");
+
 }
 
 function startGame(){
 
 document.getElementById("startBtn").style.display="none";
+
 newQuestion();
 
 }
@@ -298,11 +384,17 @@ if(difficulty==="express") return Math.min(score+1,8);
 
 }
 
+//================
+// Question
+//================
+
 function newQuestion(){
 
 index=0;
 targets=[];
 choices=[];
+
+document.getElementById("choices").innerHTML="";
 
 for(let i=0;i<count();i++){
 targets.push(emojiList[Math.floor(Math.random()*emojiList.length)]);
@@ -310,25 +402,26 @@ targets.push(emojiList[Math.floor(Math.random()*emojiList.length)]);
 
 let set=new Set(targets);
 
-while(set.size<8){
+while(set.size<8)
 set.add(emojiList[Math.floor(Math.random()*emojiList.length)]);
-}
 
 choices=[...set].sort(()=>Math.random()-0.5);
 
 showTargets();
 
 setTimeout(()=>{
+
 document.getElementById("targets").innerHTML="";
+
 showChoices();
-showProgress();
+
 },1000);
 
 }
 
 function showTargets(){
 
-let div=document.getElementById("targets");
+let div = document.getElementById("targets");
 div.innerHTML="";
 
 targets.forEach(e=>{
@@ -346,39 +439,29 @@ let grid=document.getElementById("choices");
 grid.innerHTML="";
 
 choices.forEach(e=>{
+
 let btn=document.createElement("button");
+
 btn.innerText=e;
+
 btn.onclick=()=>check(e);
+
 grid.appendChild(btn);
-});
-
-}
-
-function showProgress(){
-
-let p=document.getElementById("progress");
-p.innerHTML="";
-
-targets.forEach((e,i)=>{
-
-let span=document.createElement("span");
-
-span.innerText=e+" ";
-
-if(i<index) span.className="done";
-else span.className="todo";
-
-p.appendChild(span);
 
 });
 
 }
+
+//================
+// 判定
+//================
 
 function mark(symbol){
 
 let m=document.getElementById("mark");
 
 m.innerText=symbol;
+
 m.style.display="block";
 
 setTimeout(()=>{
@@ -389,7 +472,7 @@ m.style.display="none";
 
 function check(e){
 
-if(e===targets[index]){
+if(e === targets[index]){
 
 mark("⭕");
 
@@ -397,14 +480,21 @@ setTimeout(()=>{
 
 index++;
 
-showProgress();
-
-if(index>=targets.length){
+if(index >= targets.length){
 
 score++;
 combo++;
 
 updateScore();
+
+if(combo>1)
+document.getElementById("combo").innerText =
+(language==="jp"?"🔥 コンボ ":"🔥 Combo ")+combo;
+
+if(isRanking(score,difficulty))
+if(!scores[difficulty].includes(score))
+addScore(score,difficulty);
+
 newQuestion();
 
 }
@@ -422,9 +512,10 @@ combo=0;
 
 updateLives();
 
-if(mistakes>=maxMistakes){
+if(mistakes >= maxMistakes){
 
-alert("ゲームオーバー\nスコア "+score);
+alert((language==="jp"?"ゲームオーバー\nスコア ":"Game Over\nScore ")+score);
+
 showMenu();
 
 }
@@ -436,21 +527,58 @@ showMenu();
 }
 
 function updateScore(){
-document.getElementById("score").innerText="スコア "+score;
+document.getElementById("score").innerText=(language==="jp"?"スコア ":"Score ")+score;
 }
 
 function updateLives(){
-document.getElementById("lives").innerText="残り "+(maxMistakes-mistakes);
+document.getElementById("lives").innerText=(language==="jp"?"残りチャンス: ":"Lives: ")+(maxMistakes-mistakes);
 }
+
+//================
+// Ranking
+//================
 
 function openRanking(){
 
 let box=document.getElementById("rankingList");
-box.innerHTML="ランキングはローカル保存";
+box.innerHTML="";
+
+difficulties.forEach(d=>{
+
+let title=document.createElement("h2");
+title.innerText=difficultyText(d);
+box.appendChild(title);
+
+let arr=scores[d];
+
+for(let i=0;i<5;i++){
+
+let div=document.createElement("div");
+div.className="rank";
+
+div.innerText=i<arr.length
+? (language==="jp"?`${i+1}位: ${arr[i]}`:`${i+1}: ${arr[i]}`)
+: (language==="jp"?`${i+1}位: ---`:`${i+1}: ---`);
+
+box.appendChild(div);
+
+}
+
+});
 
 show("ranking");
 
 }
+
+//================
+// Help
+//================
+
+function openHelp(){
+show("help");
+}
+
+updateLanguage();
 
 </script>
 </body>
