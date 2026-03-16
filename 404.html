@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -7,71 +7,77 @@ l<!DOCTYPE html>
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    font-family:sans-serif;
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(135deg,#f8fbff,#eaf3ff);
 }
 
 .block{
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(135deg,#f8fbff,#eaf3ff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+overflow:hidden;
 }
 
 .bg{
-    position: absolute;
-    width: 700px;
-    opacity: 0.08;
-    transform: rotate(-25deg);
-    top: -120px;
-    left: -120px;
+position:absolute;
+width:700px;
+opacity:0.08;
+transform:rotate(-25deg);
+top:-120px;
+left:-120px;
 }
 
 .bg2{
-    position: absolute;
-    width: 700px;
-    opacity: 0.08;
-    transform: rotate(25deg);
-    bottom: -120px;
-    right: -120px;
+position:absolute;
+width:700px;
+opacity:0.08;
+transform:rotate(25deg);
+bottom:-120px;
+right:-120px;
 }
 
 .card{
-    background:white;
-    padding:40px 50px;
-    border-radius:16px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.15);
-    max-width:500px;
+background:white !important;
+padding:40px 50px;
+border-radius:16px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+max-width:500px;
+position:relative;
+z-index:2;
 }
 
-h1{
-    margin-top:0;
-    font-size:32px;
+.card h1{
+margin-top:0;
+font-size:32px;
 }
 
-p{
-    font-size:18px;
-    line-height:1.6;
+.card p{
+font-size:18px;
+line-height:1.6;
 }
 
-a{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 20px;
-    background:#3a7cff;
-    color:white;
-    border-radius:10px;
-    text-decoration:none;
-    font-size:16px;
+.home-btn{
+display:inline-block;
+margin-top:20px;
+padding:12px 22px;
+background:#3a7cff !important;
+color:white !important;
+border-radius:10px;
+text-decoration:none;
+font-size:16px;
 }
 
-a:hover{
-    opacity:0.9;
+.home-btn:hover{
+opacity:0.9;
 }
 
 </style>
@@ -89,7 +95,8 @@ a:hover{
 <p>ページが見つかりません。</p>
 <p>URLが間違っているか、<br>ページが移動・削除された可能性があります。</p>
 
-<a href="/Suwakkoitiba/">トップページへ戻る</a>
+<a class="home-btn" href="/Suwakkoitiba/">トップページへ戻る</a>
+
 </div>
 
 </div>
