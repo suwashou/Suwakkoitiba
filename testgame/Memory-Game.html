@@ -83,12 +83,12 @@ height:80px;
 border-radius:15px;
 background:#2196f3;
 color:white;
-transition:0.1s;
+transition:0.15s;
 }
 
 .grid button:active{
 transform:scale(0.9);
-background:#1976d2;
+background:#1565c0;
 }
 
 .target{
@@ -123,19 +123,29 @@ margin-top:10px;
 
 /* 判定表示 */
 
-#result{
+#mark{
 position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 font-size:120px;
-pointer-events:none;
-opacity:0;
-transition:0.2s;
+display:none;
+z-index:999;
 }
 
-.showResult{
+/* 正解履歴 */
+
+#progress{
+font-size:40px;
+margin-top:10px;
+}
+
+.done{
 opacity:1;
+}
+
+.todo{
+opacity:0.3;
 }
 
 </style>
@@ -145,78 +155,63 @@ opacity:1;
 
 <div class="container">
 
-<!-- MENU -->
-
 <div id="menu" class="screen active">
 
-<div class="title">🧠 Memory Game</div>
+<div class="title">🧠 メモリーゲーム</div>
 
-<button class="big green" onclick="openLevel()">START</button>
+<button class="big green" onclick="openLevel()">スタート</button>
 
 <br>
 
-<button class="mid orange" onclick="openRanking()">Ranking</button>
+<button class="mid orange" onclick="openRanking()">ランキング</button>
 
 </div>
-
-
-<!-- LEVEL -->
 
 <div id="level" class="screen">
 
-<h1>Select Level</h1>
+<h1>難易度</h1>
 
 <div id="levelButtons"></div>
 
-<button class="back" onclick="showMenu()">Back</button>
+<button class="back" onclick="showMenu()">戻る</button>
 
 </div>
-
-
-<!-- GAME -->
 
 <div id="game" class="screen">
 
 <div id="score"></div>
-
 <div id="combo"></div>
-
 <div id="lives"></div>
+
+<div id="progress"></div>
 
 <br>
 
-<button id="startBtn" class="big green" onclick="startGame()">Start</button>
+<button id="startBtn" class="big green" onclick="startGame()">スタート</button>
 
 <div id="targets"></div>
 
 <div id="choices" class="grid"></div>
 
-<button class="back" onclick="showMenu()">Back</button>
+<button class="back" onclick="showMenu()">戻る</button>
 
 </div>
-
-
-<!-- RANKING -->
 
 <div id="ranking" class="screen">
 
-<h1>🏆 Ranking</h1>
+<h1>🏆 ランキング</h1>
 
 <div id="rankingList"></div>
 
-<button class="back" onclick="showMenu()">Back</button>
+<button class="back" onclick="showMenu()">戻る</button>
 
 </div>
 
 </div>
 
-<div id="result"></div>
+<div id="mark"></div>
 
 <script>
-
-// =================
-// Emoji
-// =================
 
 const emojiList=[
 "😀","😃","😄","😁","😆","😅","😂","🤣","🙂","🙃",
@@ -229,80 +224,7 @@ const emojiList=[
 "⭐","🌟","✨","⚡","🔥"
 ];
 
-// =================
-// Difficulty
-// =================
-
 const difficulties=["easy","normal","hard","express"];
-
-// =================
-// Ranking
-// =================
-
-let scores={easy:[],normal:[],hard:[],express:[]};
-
-function loadRanking(){
-let data=localStorage.getItem("ranking");
-if(data) scores=JSON.parse(data);
-}
-
-function saveRanking(){
-localStorage.setItem("ranking",JSON.stringify(scores));
-}
-
-loadRanking();
-
-// =================
-// Screen
-// =================
-
-function show(id){
-document.querySelectorAll(".screen")
-.forEach(s=>s.classList.remove("active"));
-
-document.getElementById(id)
-.classList.add("active");
-}
-
-function showMenu(){
-show("menu");
-}
-
-// =================
-// Level
-// =================
-
-function openLevel(){
-
-let box=document.getElementById("levelButtons");
-
-box.innerHTML="";
-
-difficulties.forEach(d=>{
-
-let btn=document.createElement("button");
-
-btn.className="mid blue";
-
-btn.innerText=d;
-
-btn.onclick=()=>start(d);
-
-box.appendChild(btn);
-
-box.appendChild(document.createElement("br"));
-
-box.appendChild(document.createElement("br"));
-
-});
-
-show("level");
-
-}
-
-// =================
-// Game
-// =================
 
 let difficulty;
 let targets=[];
@@ -314,17 +236,37 @@ let mistakes=0;
 
 const maxMistakes=3;
 
-// 効果音
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
 
-const okSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3");
+function showMenu(){show("menu");}
 
-const ngSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-buzz-950.mp3");
+function openLevel(){
 
+let box=document.getElementById("levelButtons");
+box.innerHTML="";
+
+difficulties.forEach(d=>{
+
+let btn=document.createElement("button");
+btn.className="mid blue";
+btn.innerText=d;
+btn.onclick=()=>start(d);
+
+box.appendChild(btn);
+box.appendChild(document.createElement("br"));
+box.appendChild(document.createElement("br"));
+
+});
+
+show("level");
+}
 
 function start(d){
 
 difficulty=d;
-
 score=0;
 combo=0;
 mistakes=0;
@@ -335,69 +277,41 @@ updateLives();
 
 document.getElementById("targets").innerHTML="";
 document.getElementById("choices").innerHTML="";
-
 document.getElementById("startBtn").style.display="block";
 
 show("game");
-
 }
-
 
 function startGame(){
 
 document.getElementById("startBtn").style.display="none";
-
 newQuestion();
 
 }
 
-
 function count(){
 
 if(difficulty==="easy") return 1;
-
 if(difficulty==="normal") return Math.min(score+1,4);
-
 if(difficulty==="hard") return Math.min(score+1,8);
-
 if(difficulty==="express") return Math.min(score+1,8);
 
 }
 
-
-// =================
-// Question
-// =================
-
 function newQuestion(){
 
 index=0;
-
 targets=[];
 choices=[];
 
-document.getElementById("choices").innerHTML="";
-
 for(let i=0;i<count();i++){
-
-targets.push(
-
-emojiList[Math.floor(Math.random()*emojiList.length)]
-
-);
-
+targets.push(emojiList[Math.floor(Math.random()*emojiList.length)]);
 }
 
 let set=new Set(targets);
 
 while(set.size<8){
-
-set.add(
-
-emojiList[Math.floor(Math.random()*emojiList.length)]
-
-);
-
+set.add(emojiList[Math.floor(Math.random()*emojiList.length)]);
 }
 
 choices=[...set].sort(()=>Math.random()-0.5);
@@ -405,91 +319,85 @@ choices=[...set].sort(()=>Math.random()-0.5);
 showTargets();
 
 setTimeout(()=>{
-
 document.getElementById("targets").innerHTML="";
-
 showChoices();
-
+showProgress();
 },1000);
 
 }
-
 
 function showTargets(){
 
 let div=document.getElementById("targets");
-
 div.innerHTML="";
 
 targets.forEach(e=>{
-
 let s=document.createElement("span");
-
 s.className="target";
-
 s.innerText=e;
-
 div.appendChild(s);
-
 });
 
 }
-
 
 function showChoices(){
 
 let grid=document.getElementById("choices");
-
 grid.innerHTML="";
 
 choices.forEach(e=>{
-
 let btn=document.createElement("button");
-
 btn.innerText=e;
-
-btn.onclick=()=>check(e,btn);
-
+btn.onclick=()=>check(e);
 grid.appendChild(btn);
+});
+
+}
+
+function showProgress(){
+
+let p=document.getElementById("progress");
+p.innerHTML="";
+
+targets.forEach((e,i)=>{
+
+let span=document.createElement("span");
+
+span.innerText=e+" ";
+
+if(i<index) span.className="done";
+else span.className="todo";
+
+p.appendChild(span);
 
 });
 
 }
 
-// =================
-// 判定
-// =================
+function mark(symbol){
 
-function showResult(symbol){
+let m=document.getElementById("mark");
 
-let r=document.getElementById("result");
-
-r.innerText=symbol;
-
-r.classList.add("showResult");
+m.innerText=symbol;
+m.style.display="block";
 
 setTimeout(()=>{
-
-r.classList.remove("showResult");
-
+m.style.display="none";
 },1000);
 
 }
 
-
-function check(e,btn){
-
-btn.style.background="#0d47a1";
+function check(e){
 
 if(e===targets[index]){
 
-okSound.play();
-
-showResult("⭕");
+mark("⭕");
 
 setTimeout(()=>{
 
 index++;
+
+showProgress();
 
 if(index>=targets.length){
 
@@ -497,7 +405,6 @@ score++;
 combo++;
 
 updateScore();
-
 newQuestion();
 
 }
@@ -506,27 +413,19 @@ newQuestion();
 
 }else{
 
-ngSound.play();
-
-showResult("❌");
+mark("❌");
 
 setTimeout(()=>{
 
 mistakes++;
-
 combo=0;
 
 updateLives();
 
 if(mistakes>=maxMistakes){
 
-alert("Game Over\nScore "+score);
-
+alert("ゲームオーバー\nスコア "+score);
 showMenu();
-
-}else{
-
-index=0;
 
 }
 
@@ -536,52 +435,18 @@ index=0;
 
 }
 
-
 function updateScore(){
-
-document.getElementById("score").innerText="Score "+score;
-
+document.getElementById("score").innerText="スコア "+score;
 }
 
 function updateLives(){
-
-document.getElementById("lives").innerText="Lives "+(maxMistakes-mistakes);
-
+document.getElementById("lives").innerText="残り "+(maxMistakes-mistakes);
 }
-
-// =================
-// Ranking
-// =================
 
 function openRanking(){
 
 let box=document.getElementById("rankingList");
-
-box.innerHTML="";
-
-difficulties.forEach(d=>{
-
-let title=document.createElement("h2");
-
-title.innerText=d;
-
-box.appendChild(title);
-
-let arr=scores[d];
-
-for(let i=0;i<5;i++){
-
-let div=document.createElement("div");
-
-div.className="rank";
-
-div.innerText=i<arr.length?(i+1)+": "+arr[i]:(i+1)+": ---";
-
-box.appendChild(div);
-
-}
-
-});
+box.innerHTML="ランキングはローカル保存";
 
 show("ranking");
 
