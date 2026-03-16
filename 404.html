@@ -1,0 +1,98 @@
+l<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>404 - ページが見つかりません</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+    margin:0;
+    font-family:sans-serif;
+}
+
+.block{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg,#f8fbff,#eaf3ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.bg{
+    position: absolute;
+    width: 700px;
+    opacity: 0.08;
+    transform: rotate(-25deg);
+    top: -120px;
+    left: -120px;
+}
+
+.bg2{
+    position: absolute;
+    width: 700px;
+    opacity: 0.08;
+    transform: rotate(25deg);
+    bottom: -120px;
+    right: -120px;
+}
+
+.card{
+    background:white;
+    padding:40px 50px;
+    border-radius:16px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    max-width:500px;
+}
+
+h1{
+    margin-top:0;
+    font-size:32px;
+}
+
+p{
+    font-size:18px;
+    line-height:1.6;
+}
+
+a{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 20px;
+    background:#3a7cff;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:16px;
+}
+
+a:hover{
+    opacity:0.9;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="block">
+
+<img class="bg" src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big">
+<img class="bg2" src="https://schit.net/tama/essuwa/wysiwyg/image/download/1/3123/big">
+
+<div class="card">
+<h1>404</h1>
+<p>ページが見つかりません。</p>
+<p>URLが間違っているか、<br>ページが移動・削除された可能性があります。</p>
+
+<a href="/">トップページへ戻る</a>
+</div>
+
+</div>
+
+</body>
+</html>
