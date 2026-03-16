@@ -209,6 +209,8 @@ updateLanguage();
 
 function updateLanguage(){
 
+document.getElementById("okHelpBtn").innerText = language==="jp" ? "戻る" : "Back";
+
 document.getElementById("title").innerText = language==="jp" ? "🧠 メモリーゲーム" : "🧠 Memory Game";
 document.getElementById("startMenuBtn").innerText = language==="jp" ? "スタート" : "START";
 document.getElementById("rankingMenuBtn").innerText = language==="jp" ? "ランキング" : "Ranking";
